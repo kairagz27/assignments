@@ -4,49 +4,59 @@
 **Group:** SE25-13
 
 ## Brief summary of your work process
-In this project, I developed a banking system simulation by applying various logical and physical data structures in Java. During the process, the following were implemented:
-* `LinkedList` for dynamically storing the list of client accounts.
-* `Stack` (LIFO) to save the transaction history and provide the ability to view or undo the last operation.
-* `Queue` (FIFO) for processing the bill payment queue and simulating the moderation of new account opening requests.
-* `Arrays` to demonstrate working with fixed-size physical data structures.
+In this project, I developed a banking system simulation by implementing fundamental data structures **from scratch** in Java, completely avoiding standard Java Collections framework (java.util.*).
 
-All these components were successfully integrated into a single console application with an interactive menu. One minor technical issue I encountered while building the final menu was handling the newline character (`\n`) after reading numbers via `Scanner.nextInt()`. This was successfully resolved by adding an empty `scanner.nextLine()` call to clear the buffer.
+To achieve this, I created a generic `Node<T>` class to serve as the foundation for dynamic memory allocation. Based on this node architecture, I manually implemented:
+* `CustomLinkedList` for dynamic account storage.
+* `CustomStack` (LIFO) for transaction history tracking.
+* `CustomQueue` (FIFO) for processing queues.
+
+This approach provided a deeper understanding of how memory references, pointers, and data structure algorithms work under the hood. All components were integrated into an interactive console-based banking menu.
 
 ---
+
 ## Part 1. Logical Data Structures
 
-### Task 1. Bank Account Storage Using LinkedList
-Created the `BankAccount` class with the necessary encapsulated fields: `accountNumber`, `username`, and `balance`. A `LinkedList` is used to store active clients, implementing functions to add new accounts, display the full list, and search for a specific account by username.
-![img.png](img.png)
-![img_1.png](img_1.png)
+### Task 1. Bank Account Storage Using Custom LinkedList
+Created the `BankAccount` class with encapsulated fields (`accountNumber`, `username`, `balance`). Instead of standard lists, I implemented a `CustomLinkedList<T>` using manual node traversal to add new accounts and search for specific users.
+![img_9.png](img_9.png)
+![img_10.png](img_10.png)
 
 ### Task 2. Deposit & Withdraw Operations
-Added methods to the `BankAccount` class for depositing and withdrawing funds. When operations are performed, the balance correctly updates directly within the objects inside the `LinkedList`.
-![img_2.png](img_2.png)
-![img_3.png](img_3.png)
+Added business logic methods to the `BankAccount` class for depositing and withdrawing funds. The balance correctly updates directly within the objects stored inside the custom linked list.
+![img_12.png](img_12.png)
 
-### Task 3. Transaction History (Stack LIFO)
-Implemented a `transactionHistory` stack to record actions (deposits, withdrawals). Demonstrated stack methods: adding a transaction (`push`), viewing the last operation without removing it (`peek`), and undoing it by removing it from the history (`pop`).
-![img_4.png](img_4.png)
 
-### Task 4. Bill Payment Queue (Queue FIFO)
-Created a `billQueue` to process bill payment requests. New bills are added to the back of the queue, and the system processes them strictly from the front, demonstrating the FIFO principle.
-![img_5.png](img_5.png)
+### Task 3. Transaction History (Custom Stack LIFO)
+Implemented a `CustomStack<T>` class from scratch using node pointers targeting the "top" element. This stack is used to record transaction events (deposits/withdrawals) dynamically.
+![img_13.png](img_13.png)
+
+
+### Task 4. Bill Payment Queue (Custom Queue FIFO)
+Created a `CustomQueue<T>` utilizing `front` and `rear` node pointers to maintain O(1) time complexity for adding items. This queue successfully simulates a FIFO bill payment system.
+[img_14.png](img_14.png)
 
 ### Task 5. Account Opening Queue (Admin Simulation)
-Implemented an application moderation process: new users first go to the `accountRequests` waiting queue. The system administrator can process the first request in the queue, after which the account is extracted and transferred to the main database (the `LinkedList` from the first task).
-![img_6.png](img_6.png)
+Implemented an application moderation workflow: new user requests are pushed into a `CustomQueue<BankAccount>`. The system administrator can poll the first request from the queue, extracting the account and transferring it to the main `CustomLinkedList` database.
+
+![img_15.png](img_15.png)
+
+---
 
 ## Part 2. Physical Data Structures
 
 ### Task 6. Predefined Accounts in Array
-To demonstrate the operation of fixed-length physical data structures, an array of type `BankAccount` with 3 elements was created. The array was populated with predefined accounts and subsequently printed to the console.
-![img_7.png](img_7.png)
+To demonstrate the contrast between dynamic node-based structures and fixed-length physical memory allocation, an array `BankAccount[3]` was initialized. It was populated with predefined data and parsed efficiently.
+![img_17.png](img_17.png)
+
+---
+
 ## Part 3. Mini Banking Menu
 
 ### System Integration
-All previously developed logical and physical data structures were combined into a single infinite loop menu.
-* **Bank Menu:** Users can submit an account opening request (which goes to the queue) and deposit or withdraw money.
-* **ATM Menu:** Implemented balance inquiry and cash withdrawal.
-* **Admin Area:** The administrator has access to view and manually process both the account opening requests and bill payment queues.
-![img_8.png](img_8.png)
+All custom-built data structures were combined into a single infinite loop routing system using `Scanner`.
+* **Bank Menu:** Users can request new accounts and perform transactions.
+* **ATM Menu:** Quick access for balance inquiries and cash withdrawals.
+* **Admin Area:** Secure area for polling queues and approving accounts/bills.
+
+![img_18.png](img_18.png)

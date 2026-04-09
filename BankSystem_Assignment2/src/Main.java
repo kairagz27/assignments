@@ -1,21 +1,16 @@
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
-        LinkedList<BankAccount> accounts = new LinkedList<>(); // Основная база клиентов [cite: 108]
-        Stack<String> history = new Stack<>(); // История транзакций [cite: 109]
-        Queue<BankAccount> accountRequests = new LinkedList<>(); // Очередь на открытие счета
-        Queue<String> billQueue = new LinkedList<>(); // Очередь на оплату счетов
-
+        CustomLinkedList<BankAccount> accounts = new CustomLinkedList<>();
+        CustomStack<String> history = new CustomStack<>();
+        CustomQueue<BankAccount> accountRequests = new CustomQueue<>();
+        CustomQueue<String> billQueue = new CustomQueue<>();
 
         accounts.add(new BankAccount("KZ001", "Ali", 150000));
         accounts.add(new BankAccount("KZ002", "Sara", 220000));
         billQueue.add("Electricity Bill");
         billQueue.add("Internet Bill");
-
 
         System.out.println("--- Task 6: Physical Data Structure (Array) ---");
         BankAccount[] bankArray = new BankAccount[3];
@@ -29,7 +24,6 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
-
 
         while (isRunning) {
             System.out.println("\n=== MINI BANKING MENU ===");
@@ -141,9 +135,9 @@ public class Main {
         scanner.close();
     }
 
-
-    private static BankAccount findAccount(LinkedList<BankAccount> accounts, String username) {
-        for (BankAccount acc : accounts) {
+    private static BankAccount findAccount(CustomLinkedList<BankAccount> accounts, String username) {
+        for (int i = 0; i < accounts.size(); i++) {
+            BankAccount acc = accounts.get(i);
             if (acc.getUsername().equalsIgnoreCase(username)) {
                 return acc;
             }

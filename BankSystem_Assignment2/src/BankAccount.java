@@ -40,6 +40,4 @@ public class BankAccount {
             System.out.println("Insufficient funds or invalid amount.");
         }
     }
-
-
 }
