@@ -3,7 +3,7 @@
 **Student:** Kairbek Agzam
 **Group:** SE25-13
 
-## Brief summary of your work process
+## Brief summary of my work process
 In this project, I developed a banking system simulation by implementing fundamental data structures **from scratch** in Java, completely avoiding standard Java Collections framework (java.util.*).
 
 To achieve this, I created a generic `Node<T>` class to serve as the foundation for dynamic memory allocation. Based on this node architecture, I manually implemented:
